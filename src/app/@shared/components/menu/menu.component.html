@@ -1,0 +1,60 @@
+<ul class="space-y-2 font-medium">
+  <ng-container *ngFor="let item of items">
+    <li>
+      <a
+        *ngIf="!item.children"
+        [routerLink]="item.link"
+        class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+      >
+        <ng-container *ngIf="item.icon">
+          <mat-icon
+            class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            *ngIf="isString(item.icon); else iconTemplate"
+            >{{ item.icon }}</mat-icon
+          >
+
+          <ng-template #iconTemplate>
+            <mat-icon
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+              [fontSet]="getIconFontSet(item.icon)"
+              >{{ getIconName(item.icon) }}</mat-icon
+            >
+          </ng-template>
+        </ng-container>
+
+        <span class="ml-3">{{ item.title }}</span>
+      </a>
+
+      <button
+        *ngIf="item.children"
+        type="button"
+        class="group flex w-full items-center rounded-lg p-2 text-base text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+        (click)="collapsed = !collapsed"
+      >
+        <mat-icon
+          class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+          *ngIf="item.icon"
+          >{{ item.icon }}</mat-icon
+        >
+
+        <span class="ml-3 flex-1 whitespace-nowrap text-left">{{ item.title }}</span>
+        <span
+          class="ml-3 inline-flex h-3 w-3 items-center justify-center rounded-full bg-blue-100 p-3 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+          >3</span
+        >
+        <span
+          class="ml-3 inline-flex items-center justify-center rounded-full bg-gray-100 px-2 text-sm font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+          >Pro</span
+        >
+
+        <mat-icon class="h-6 w-6">
+          {{ collapsed ? 'expand_more' : 'expand_less' }}
+        </mat-icon>
+      </button>
+
+      <div *ngIf="item.children && !collapsed" class="px-2 py-2">
+        <app-menu [items]="item.children" [id]="item.title.toLowerCase()"></app-menu>
+      </div>
+    </li>
+  </ng-container>
+</ul>
