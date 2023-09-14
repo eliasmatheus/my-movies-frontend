@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  dev:
+    container_name: development
+    build: .
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '4200:4200'

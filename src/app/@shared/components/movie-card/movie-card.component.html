@@ -1,0 +1,54 @@
+<button
+  type="button"
+  id="popoverTrigger-{{ movie.imdbID }}"
+  (mouseenter)="onHover()"
+  (mouseleave)="onMouseLeave()"
+  class="w-full rounded-lg border border-gray-200 bg-white shadow transition-transform duration-300 ease-in-out hover:-translate-y-1 dark:border-gray-700 dark:bg-gray-800"
+>
+  <img
+    class="aspect-[11/17] w-full rounded-b-lg rounded-t-lg object-cover"
+    [src]="movie.Poster !== 'N/A' ? movie.Poster : imgPlaceholder"
+    alt="product image"
+  />
+
+  <div class="h-20 p-3">
+    <a href="#">
+      <h5 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
+        {{ movie.Title }}
+      </h5>
+    </a>
+  </div>
+
+  <div
+    class="flex items-center justify-between border-t border-t-gray-200 p-3 text-sm dark:border-t-gray-700"
+  >
+    <span class="font-thin capitalize text-blue-400 dark:text-blue-300">
+      {{ movie.Type }}
+    </span>
+
+    <div>
+      <span class="font-thin text-gray-500 dark:text-gray-300">{{ movie.Year }}</span>
+      <span *ngIf="movie.Runtime" class="font-thin text-gray-500 dark:text-gray-300">
+        &#x2022;
+      </span>
+      <span class="font-thin text-gray-500 dark:text-gray-300">{{ movie.Runtime }}</span>
+    </div>
+  </div>
+</button>
+
+<div
+  id="popoverTarget-{{ movie.imdbID }}"
+  data-popover
+  role="tooltip"
+  class="invisible absolute z-10 inline-block w-64 rounded-lg border border-gray-200 bg-white text-sm text-gray-500 opacity-0 shadow-sm transition-opacity duration-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+>
+  <div
+    class="rounded-t-lg border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+  >
+    <h3 class="font-semibold text-gray-900 dark:text-white">Popover title</h3>
+  </div>
+  <div class="px-3 py-2">
+    <p>And here's some amazing content. It's very engaging. Right?</p>
+  </div>
+  <div data-popper-arrow></div>
+</div>
