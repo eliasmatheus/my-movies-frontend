@@ -1,10 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { BadgeComponent } from '../ui/badge/badge.component';
+import { ButtonComponent } from '../ui/button/button.component';
 import { MovieCardComponent } from './movie-card.component';
+
+const COMPONENTS = [BadgeComponent, ButtonComponent];
 
 @NgModule({
   declarations: [MovieCardComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule, ...COMPONENTS],
   exports: [MovieCardComponent],
 })
 export class MovieCardModule {}

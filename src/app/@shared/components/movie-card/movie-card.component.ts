@@ -1,30 +1,25 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  Input,
-  OnDestroy,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
+import type { PopoverInterface, PopoverOptions } from 'flowbite';
 import { Popover } from 'flowbite';
-import type { PopoverOptions, PopoverInterface } from 'flowbite';
 
-import { MoviePreview } from '../../models/movie';
-import { MoviesService } from '../../services/movies.service';
 import { SubSink } from 'subsink';
+import { MovieData } from '../../models/movie';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent implements AfterViewInit, OnDestroy {
   private subs = new SubSink();
 
-  @Input({ required: true }) movie: MoviePreview;
+  @Input({ required: true }) movie: MovieData;
 
   popover: PopoverInterface | null = null;
 
   imgPlaceholder = '/assets/images/movie-poster-placeholder.svg';
+
+  showOptions = false;
 
   constructor(private moviesService: MoviesService) {}
 
@@ -46,12 +41,21 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
   }
 
   onHover() {
+    this.showOptions = true;
     if (!this.popover) return;
 
-    this.getMovieById();
+    if (!this.movie.Plot) {
+      this.getMovieById();
+
+      return;
+    }
+
+    this.popover.show();
   }
 
   onMouseLeave() {
+    this.showOptions = false;
+
     if (!this.popover) return;
 
     this.popover.hide();
@@ -60,7 +64,7 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
   getMovieById() {
     this.subs.sink = this.moviesService.getMovieById(this.movie.imdbID).subscribe({
       next: data => {
-        console.log('this.moviesService.getMovieById -> data:', data);
+        this.movie = data;
 
         if (!this.popover) return;
 

@@ -34,6 +34,21 @@
       <span class="font-thin text-gray-500 dark:text-gray-300">{{ movie.Runtime }}</span>
     </div>
   </div>
+
+  <!-- Overlay de opções -->
+  <div
+    *ngIf="showOptions"
+    class="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+  >
+    <!-- Botão de Adicionar ao WatchList -->
+    <app-button>
+      <div class="flex items-center justify-center">
+        <mat-icon class="mr-2">bookmark_add</mat-icon>
+
+        <div>Add to WatchList</div>
+      </div>
+    </app-button>
+  </div>
 </button>
 
 <div
@@ -45,10 +60,27 @@
   <div
     class="rounded-t-lg border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
   >
-    <h3 class="font-semibold text-gray-900 dark:text-white">Popover title</h3>
+    <h3 class="font-semibold text-gray-900 dark:text-white">
+      {{ movie.Title }}
+    </h3>
   </div>
   <div class="px-3 py-2">
-    <p>And here's some amazing content. It's very engaging. Right?</p>
+    <div class="mb-2 flex justify-between">
+      <app-badge>{{ movie.Rated }}</app-badge>
+      <div>IMDb {{ movie.imdbRating }}</div>
+      <div>{{ movie.Year }}</div>
+      <div>{{ movie.Runtime }}</div>
+    </div>
+
+    <p class="mb-2">
+      {{ movie.Plot }}
+    </p>
+
+    <div>
+      <div>Country: {{ movie.Country }}</div>
+      <div>Genre: {{ movie.Genre }}</div>
+      <div>Scores: {{ movie.imdbRating }}</div>
+    </div>
   </div>
   <div data-popper-arrow></div>
 </div>
