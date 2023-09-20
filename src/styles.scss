@@ -2,5 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.transparent-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 0;
+  background-color: transparent;
+}
+
+label {
+  &.required::after {
+    content: '*';
+    margin-left: 2px;
+    @apply text-red-500;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WatchListService } from '../@shared/services/watch-list.service';
+import { WatchlistService } from '../@shared/services/watchlist.service';
 import { MENU_ITEMS } from './pages-menu';
 
 @Component({
@@ -9,10 +9,10 @@ import { MENU_ITEMS } from './pages-menu';
 export class PagesComponent implements OnInit {
   menuItems = MENU_ITEMS;
 
-  constructor(private watchListService: WatchListService) {}
+  constructor(private watchListService: WatchlistService) {}
 
   ngOnInit() {
-    this.watchListService.getWatchList().subscribe({
+    this.watchListService.getWatchlist().subscribe({
       next: data => {
         console.log('this.watchListService.getWatchList -> data:', data);
       },

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
+import { PagesComponent } from './pages.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'movies',
         component: HomeComponent,
+      },
+      {
+        path: 'watchlist',
+        component: WatchlistComponent,
       },
     ],
   },

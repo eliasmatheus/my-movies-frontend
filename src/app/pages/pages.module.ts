@@ -9,11 +9,12 @@ import { LayoutsModule } from '../@shared/layouts/layouts.module';
 import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 const COMPONENTS = [LayoutsModule, MenuModule, MovieCardModule, ButtonComponent];
 
 @NgModule({
-  declarations: [PagesComponent, HomeComponent],
+  declarations: [PagesComponent, HomeComponent, WatchlistComponent],
   imports: [CommonModule, PagesRoutingModule, MatIconModule, ...COMPONENTS],
 })
 export class PagesModule {}

@@ -1,0 +1,60 @@
+<app-modal title="Create a Watchlist" (close)="onClose()">
+  <form [formGroup]="form">
+    <div class="mb-6">
+      <label
+        for="name"
+        class="required mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+      >
+        Name your watchlist
+      </label>
+      <input
+        type="name"
+        id="name"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:shadow-sm-light dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        placeholder="Favorites..."
+        formControlName="name"
+      />
+    </div>
+    <div class="mb-6">
+      <label
+        for="description"
+        class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+      >
+        If you want, you can add a description
+      </label>
+
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        placeholder="Watchlist description..."
+      ></textarea>
+    </div>
+
+    <div class="mb-6">
+      <p>
+        <span class="text-red-500">* </span>
+        Required fields
+      </p>
+    </div>
+  </form>
+
+  <footer class="flex justify-end gap-2">
+    <button
+      (click)="onClose()"
+      type="button"
+      class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="onSubmit()"
+    >
+      Save
+    </button>
+  </footer>
+</app-modal>

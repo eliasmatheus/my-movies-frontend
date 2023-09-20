@@ -2,9 +2,11 @@ import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import type { PopoverInterface, PopoverOptions } from 'flowbite';
 import { Popover } from 'flowbite';
 
+import { MatDialog } from '@angular/material/dialog';
 import { SubSink } from 'subsink';
 import { MovieData } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
+import { AddToWatchlistModalComponent } from '../add-to-watchlist-modal/add-to-watchlist-modal.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -21,7 +23,26 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
 
   showOptions = false;
 
-  constructor(private moviesService: MoviesService) {}
+  constructor(
+    public dialog: MatDialog,
+    private moviesService: MoviesService,
+  ) {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddToWatchlistModalComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '400px',
+      data: {
+        id: this.movie.imdbID,
+      },
+      panelClass: 'transparent-dialog',
+    });
+
+    this.subs.sink = dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
   ngAfterViewInit(): void {
     // set the popover content element
@@ -31,8 +52,8 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
     const triggerEl = document.getElementById(`popoverTrigger-${this.movie.imdbID}`);
 
     const options: PopoverOptions = {
-      placement: 'right',
       triggerType: 'hover',
+      offset: -50,
     };
 
     if (!targetEl || !triggerEl) return;
