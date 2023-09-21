@@ -43,7 +43,6 @@ export class WatchlistModalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit -> this.data:', this.data);
     if (!this.data) return;
 
     this.form.patchValue({

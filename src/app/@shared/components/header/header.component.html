@@ -41,15 +41,16 @@
 
         <!-- Logo -->
         <a routerLink="/" class="mr-4 flex items-center justify-between">
-          <img
+          <!-- <img
             src="https://flowbite.s3.amazonaws.com/logo.svg"
             class="mr-3 h-8"
-            alt="Flowbite Logo"
-          />
+            alt="My Movies"
+          /> -->
           <span
             class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
-            >Flowbite</span
           >
+            My Movies
+          </span>
         </a>
 
         <div class="hidden md:block md:pl-2">
@@ -59,6 +60,16 @@
 
       <div class="flex items-center justify-between gap-1">
         <app-theme-toggle-button />
+
+        <!-- New Watchlist -->
+        <app-button
+          title="New Watchlist"
+          status="ghost"
+          size="square"
+          (click)="openWatchlistModal()"
+        >
+          <mat-icon>post_add</mat-icon>
+        </app-button>
 
         <button
           type="button"
@@ -83,7 +94,7 @@
           </svg>
         </button>
 
-        <app-user></app-user>
+        <!-- <app-user></app-user> -->
       </div>
     </div>
   </nav>

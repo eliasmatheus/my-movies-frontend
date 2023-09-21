@@ -8,7 +8,7 @@ describe('AddToWatchlistModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AddToWatchlistModalComponent]
+      declarations: [AddToWatchlistModalComponent],
     });
     fixture = TestBed.createComponent(AddToWatchlistModalComponent);
     component = fixture.componentInstance;

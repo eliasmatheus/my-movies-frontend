@@ -3,6 +3,8 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { DirectivesModule } from '@shared/directives/directives.module';
+import { SpinnerDirective } from '@shared/directives/spinner.directive';
 import { SubSink } from 'subsink';
 import { Watchlist } from '../../models/watchlist';
 import { ToastService } from '../../services/toast.service';
@@ -27,7 +29,9 @@ interface ExtendedWatchlist extends Watchlist {
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    DirectivesModule,
   ],
+  providers: [SpinnerDirective],
 })
 export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -64,8 +68,10 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
 
         this.getMovieWatchlists();
       },
-      error: err => {
+      error: () => {
         this.loading.watchlists = false;
+
+        this.toastService.error('Error', 'Something went wrong');
       },
     });
   }
@@ -76,14 +82,11 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
     this.watchListService.getMovieWatchlists(this.data.id).subscribe({
       next: data => {
         this.loading.movieWatchlists = false;
-        console.log('this.watchListService.getWatchList -> data:', data);
 
         this.watchlists = this.watchlists.map(watchlist => {
           const found = data.watchlists.find(
             movieWatchlist => movieWatchlist === watchlist.id,
           );
-
-          console.log('this.watchListService.getMovieWatchlists -> found:', found);
 
           if (found) {
             return {
@@ -96,8 +99,10 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
           return watchlist;
         });
       },
-      error: err => {
+      error: () => {
         this.loading.movieWatchlists = false;
+
+        this.toastService.error('Error getting watchlists');
       },
     });
   }

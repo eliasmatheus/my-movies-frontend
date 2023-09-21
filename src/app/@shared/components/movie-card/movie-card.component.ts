@@ -10,6 +10,7 @@ import type { PopoverInterface, PopoverOptions } from 'flowbite';
 import { Popover } from 'flowbite';
 
 import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from '@shared/services/toast.service';
 import { SubSink } from 'subsink';
 import { MovieData } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
@@ -35,6 +36,7 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
+    private toastService: ToastService,
     private moviesService: MoviesService,
   ) {}
 
@@ -85,14 +87,14 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
 
         this.popover.show();
       },
-      error: err => {
-        console.log('this.moviesService.getMovieById -> err:', err);
+      error: () => {
+        this.toastService.error('Error', 'Something went wrong');
       },
     });
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddToWatchlistModalComponent, {
+    this.dialog.open(AddToWatchlistModalComponent, {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '400px',
@@ -100,10 +102,6 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
         id: this.movie.imdbID,
       },
       panelClass: 'transparent-dialog',
-    });
-
-    this.subs.sink = dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

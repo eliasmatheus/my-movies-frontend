@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment.development';
 import { Observable, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { FullMovieData, MovieSearchResponse, TopMoviesResponse } from '../models/movie';
 
 interface MoviesCache {

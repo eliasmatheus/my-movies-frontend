@@ -13,7 +13,6 @@ export class ThemeToggleButtonComponent {
 
   toggleTheme() {
     const nextTheme = this.theme === 'light' ? 'dark' : 'light';
-    console.log('toggleTheme -> nextTheme:', nextTheme);
 
     this.theme = nextTheme;
     this.themeService.setUserTheme(nextTheme);

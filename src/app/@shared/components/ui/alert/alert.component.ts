@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-loader',
+  selector: 'app-alert',
   standalone: true,
-  templateUrl: './loader.component.html',
+  templateUrl: './alert.component.html',
+  styleUrls: ['./alert.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoaderComponent {}
+export class AlertComponent {}

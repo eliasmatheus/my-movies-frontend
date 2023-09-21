@@ -15,8 +15,6 @@ export class MovieSearchComponent {
   constructor(private router: Router) {}
 
   onSubmit() {
-    console.log(this.form.value);
-
     this.router.navigate(['pages/movies'], {
       queryParams: { query: this.form.value.search },
     });

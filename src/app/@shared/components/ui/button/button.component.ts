@@ -8,7 +8,7 @@ interface Params {
   selector: 'app-button',
   standalone: true,
   template: `
-    <button type="button" [class]="class">
+    <button [title]="title" type="button" [class]="class">
       <div class="flex items-center justify-center">
         <ng-content></ng-content>
       </div>
@@ -16,16 +16,15 @@ interface Params {
   `,
 })
 export class ButtonComponent implements OnChanges {
-  @Input() status: string = 'light';
-  @Input() size: string = 'medium';
+  @Input() status = 'light';
+  @Input() size = 'medium';
+  @Input() title = '';
 
   protected class = this.getClass();
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges -> changes:', changes);
     if (changes['status'] || changes['size']) {
       this.class = this.getClass();
-      console.log('ngOnChanges -> this.class:', this.class);
     }
   }
 

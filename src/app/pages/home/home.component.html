@@ -1,21 +1,23 @@
-<div
-  *ngIf="movies.length"
-  class="grid h-[calc(100vh-96px)] grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
->
-  <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
-</div>
+<div class="min-h-[calc(100vh-96px)]" [appSpinner]="loading" spinnerSize="large">
+  <div
+    *ngIf="movies.length"
+    class="grid grid-cols-2 gap-3 pb-16 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+  >
+    <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+  </div>
 
-<div
-  *ngIf="!movies.length"
-  class="flex h-[calc(100vh-96px)] flex-col items-center justify-center p-6"
->
-  <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">No results found</h2>
+  <div
+    *ngIf="!movies.length"
+    class="flex h-auto flex-col items-center justify-center p-6"
+  >
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">No results found</h2>
 
-  <p class="text-gray-500 dark:text-gray-400">Try searching for something else.</p>
+    <p class="text-gray-500 dark:text-gray-400">Try searching for something else.</p>
 
-  <p class="text-gray-500 dark:text-gray-400">
-    Or click
-    <a routerLink="/pages/movies" class="text-blue-600 underline">here</a>
-    to go home.
-  </p>
+    <p class="text-gray-500 dark:text-gray-400">
+      Or click
+      <a routerLink="/pages/movies" class="text-blue-600 underline">here</a>
+      to go home.
+    </p>
+  </div>
 </div>

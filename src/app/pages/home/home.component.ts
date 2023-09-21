@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MoviesService } from 'src/app/@shared/services/movies.service';
-import { MoviePreview } from 'src/app/@shared/models/movie';
-import { SubSink } from 'subsink';
 import { ActivatedRoute } from '@angular/router';
+import { ToastService } from '@shared/services/toast.service';
+import { MoviePreview } from 'src/app/@shared/models/movie';
+import { MoviesService } from 'src/app/@shared/services/movies.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   movies: MoviePreview[] = [];
 
+  loading = false;
+
   constructor(
     private route: ActivatedRoute,
     private service: MoviesService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -34,29 +38,41 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getTopMovies() {
+    this.loading = true;
+
     this.subs.sink = this.service.getTopMovies().subscribe({
       next: data => {
+        this.loading = false;
+
         this.movies = data.movies;
-        console.log('this.service.getTop100 -> data:', data);
       },
-      error: err => {
-        console.log('this.service.getTop100 -> err:', err);
+      error: () => {
+        this.loading = false;
+
+        this.toastService.error('Error', 'Something went wrong');
       },
     });
   }
 
   searchMovie(query: string) {
+    this.loading = true;
+
     this.subs.sink = this.service.searchMovies(query).subscribe({
       next: data => {
+        this.loading = false;
+
         this.movies = data.Search;
-        console.log('this.service.searchMovies -> data:', data);
       },
       error: err => {
-        console.log('this.service.searchMovies -> err:', err);
+        this.loading = false;
 
         if (err.status === 404) {
           this.movies = [];
+
+          return;
         }
+
+        this.toastService.error('Error', 'Something went wrong');
       },
     });
   }

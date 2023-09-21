@@ -1,4 +1,8 @@
-<div class="h-[calc(100vh-96px)]">
+<div
+  class="min-h-[calc(100vh-104px)]"
+  [appSpinner]="loading || loadingDelete"
+  spinnerSize="large"
+>
   <ng-container *ngIf="!loading">
     <div *ngIf="watchlist" class="mb-6 mt-2 flex justify-between">
       <div>
@@ -24,19 +28,25 @@
     </div>
 
     <div
-      *ngIf="movies.length && !loading"
+      *ngIf="watchlist.movies.length && !loading"
       class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
     >
       <app-movie-card
-        *ngFor="let movie of movies"
+        *ngFor="let movie of watchlist.movies"
         [movie]="movie"
         [removable]="true"
         (remove)="onRemove($event)"
       ></app-movie-card>
     </div>
-  </ng-container>
 
-  <div *ngIf="loading" class="h-full">
-    <app-loader></app-loader>
-  </div>
+    <!-- No movies yet -->
+    <div
+      *ngIf="!watchlist.movies.length && !loading"
+      class="flex h-96 flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-6 dark:border-gray-600 dark:bg-gray-800"
+    >
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">No movies yet</h2>
+
+      <p class="text-gray-500 dark:text-gray-400">Try searching for something to add.</p>
+    </div>
+  </ng-container>
 </div>
