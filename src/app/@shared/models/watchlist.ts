@@ -1,8 +1,11 @@
+import { MoviePreview } from './movie';
+
 export interface WatchlistsResponse {
   watchlists: Watchlist[];
 }
 
-export interface CreateWatchlist {
+export interface PostWatchlist {
+  id?: number;
   name: string;
   description?: string;
 }
@@ -22,4 +25,11 @@ export interface AddMovieToWatchlist {
 export interface MoviesWatchlist {
   watchlists: number[];
   imdb_id: string;
+}
+
+export interface WatchlistDetails {
+  id: number;
+  name: string;
+  movies: MoviePreview[];
+  description?: string;
 }

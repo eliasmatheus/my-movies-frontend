@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import type { PopoverInterface, PopoverOptions } from 'flowbite';
 import { Popover } from 'flowbite';
 
@@ -16,6 +23,9 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
   private subs = new SubSink();
 
   @Input({ required: true }) movie: MovieData;
+  @Input() removable = false;
+
+  @Output() remove = new EventEmitter<string>();
 
   popover: PopoverInterface | null = null;
 
@@ -27,22 +37,6 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private moviesService: MoviesService,
   ) {}
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddToWatchlistModalComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '400px',
-      data: {
-        id: this.movie.imdbID,
-      },
-      panelClass: 'transparent-dialog',
-    });
-
-    this.subs.sink = dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 
   ngAfterViewInit(): void {
     // set the popover content element
@@ -95,6 +89,26 @@ export class MovieCardComponent implements AfterViewInit, OnDestroy {
         console.log('this.moviesService.getMovieById -> err:', err);
       },
     });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddToWatchlistModalComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '400px',
+      data: {
+        id: this.movie.imdbID,
+      },
+      panelClass: 'transparent-dialog',
+    });
+
+    this.subs.sink = dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  onRemove() {
+    this.remove.emit(this.movie.imdbID);
   }
 
   ngOnDestroy(): void {

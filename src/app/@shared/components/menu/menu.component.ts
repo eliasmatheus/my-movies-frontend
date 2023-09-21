@@ -8,7 +8,7 @@ import { Menu, MenuIcon } from '../../models/menu';
 })
 export class MenuComponent {
   @Input({ required: true }) items: Menu[] = [];
-  @Input() collapsed = true;
+  @Input() collapsed = false;
 
   isString(val: any): boolean {
     return typeof val === 'string';

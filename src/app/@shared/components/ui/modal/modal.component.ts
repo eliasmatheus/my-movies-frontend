@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent {
-  @Input({ required: true }) title: string;
+  @Input({ required: true }) modalTitle: string;
   @Output() close = new EventEmitter();
 
   onClose(): void {

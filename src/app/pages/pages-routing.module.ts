@@ -13,9 +13,21 @@ const routes: Routes = [
         path: 'movies',
         component: HomeComponent,
       },
+
       {
         path: 'watchlist',
         component: WatchlistComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'watchlist/:id',
+        component: WatchlistComponent,
+      },
+
+      {
+        path: '',
+        redirectTo: 'movies',
+        pathMatch: 'full',
       },
     ],
   },

@@ -1,4 +1,4 @@
-<app-modal title="Save to..." (close)="onClose()">
+<app-modal modalTitle="Save to..." (close)="onClose()">
   <ng-container *ngIf="!watchlists.length">
     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
       No watchlists found.
@@ -30,7 +30,7 @@
   </fieldset>
 
   <div class="mb-4">
-    <app-button>
+    <app-button (click)="openWatchlistModal()" size="small">
       <div class="flex items-center justify-center">
         <mat-icon class="mr-2">add</mat-icon>
 

@@ -12,9 +12,28 @@ export class PagesComponent implements OnInit {
   constructor(private watchListService: WatchlistService) {}
 
   ngOnInit() {
-    this.watchListService.getWatchlist().subscribe({
+    this.getWatchlists();
+
+    this.watchListService.reloadWatchlists.subscribe(() => {
+      this.getWatchlists();
+    });
+  }
+
+  private getWatchlists() {
+    this.watchListService.getWatchlists().subscribe({
       next: data => {
-        console.log('this.watchListService.getWatchList -> data:', data);
+        const watchlistMenuItem = this.menuItems.find(
+          item => item.title === 'Watchlists',
+        );
+
+        if (!watchlistMenuItem) return;
+
+        watchlistMenuItem.children = data.watchlists.map(watchlist => ({
+          title: watchlist.name,
+          link: `/pages/watchlist/${watchlist.id}`,
+        }));
+
+        watchlistMenuItem.badge = data.watchlists.length;
       },
       error: err => {
         console.log('this.watchListService.getWatchList -> err:', err);

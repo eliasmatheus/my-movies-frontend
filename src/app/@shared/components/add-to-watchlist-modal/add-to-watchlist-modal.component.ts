@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { SubSink } from 'subsink';
 import { Watchlist } from '../../models/watchlist';
+import { ToastService } from '../../services/toast.service';
 import { WatchlistService } from '../../services/watchlist.service';
 import { ButtonComponent } from '../ui/button/button.component';
 import { ModalComponent } from '../ui/modal/modal.component';
+import { WatchlistModalComponent } from '../watchlist-modal/watchlist-modal.component';
 
 interface ExtendedWatchlist extends Watchlist {
   selected?: boolean;
@@ -39,9 +41,11 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<AddToWatchlistModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
 
+    private toastService: ToastService,
     private watchListService: WatchlistService,
   ) {}
 
@@ -52,10 +56,9 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
   getWatchlists() {
     this.loading.watchlists = false;
 
-    this.watchListService.getWatchlist().subscribe({
+    this.watchListService.getWatchlists().subscribe({
       next: data => {
         this.loading.watchlists = false;
-        console.log('this.watchListService.getWatchList -> data:', data);
 
         this.watchlists = data.watchlists;
 
@@ -63,8 +66,6 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
       },
       error: err => {
         this.loading.watchlists = false;
-
-        console.log('this.watchListService.getWatchList -> err:', err);
       },
     });
   }
@@ -94,16 +95,9 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
 
           return watchlist;
         });
-
-        console.log(
-          'this.watchListService.getMovieWatchlists -> this.watchlists:',
-          this.watchlists,
-        );
       },
       error: err => {
         this.loading.movieWatchlists = false;
-
-        console.log('this.watchListService.getWatchList -> err:', err);
       },
     });
   }
@@ -123,13 +117,31 @@ export class AddToWatchlistModalComponent implements OnInit, OnDestroy {
       next: () => {
         this.loading.save = false;
 
+        this.toastService.success('Movie added to watchlist');
+
         this.dialogRef.close();
       },
       error: err => {
         this.loading.save = false;
 
-        console.log('this.watchListService.getWatchList -> err:', err);
+        this.toastService.error('Error adding movie to watchlist');
+        this.toastService.error(err.error.message);
       },
+    });
+  }
+
+  openWatchlistModal(): void {
+    const dialogRef = this.dialog.open(WatchlistModalComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '400px',
+      panelClass: 'transparent-dialog',
+    });
+
+    this.subs.sink = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getWatchlists();
+      }
     });
   }
 

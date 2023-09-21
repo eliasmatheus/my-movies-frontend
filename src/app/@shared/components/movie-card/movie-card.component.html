@@ -36,7 +36,7 @@
   <!-- Overlay de opções -->
   <div
     *ngIf="showOptions"
-    class="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+    class="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-2 bg-black bg-opacity-50"
   >
     <!-- Botão de Adicionar ao WatchList -->
     <app-button (click)="openDialog()">
@@ -44,6 +44,14 @@
         <mat-icon class="mr-2">bookmark_add</mat-icon>
 
         <div>Add to WatchList</div>
+      </div>
+    </app-button>
+
+    <app-button *ngIf="removable" (click)="onRemove()" status="danger">
+      <div class="flex items-center justify-center">
+        <mat-icon class="mr-2">delete</mat-icon>
+
+        <div>Remove</div>
       </div>
     </app-button>
   </div>

@@ -7,12 +7,7 @@ export const MENU_ITEMS: Menu[] = [
     link: '/pages/movies',
   },
   {
-    title: 'Watchlist',
-    icon: 'list',
-    link: '/pages/watchlist',
-  },
-  {
-    title: 'Watchlist',
+    title: 'Watchlists',
     icon: 'list',
     link: '/pages/watchlist',
     children: [
