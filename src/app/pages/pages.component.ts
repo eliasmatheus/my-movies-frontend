@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Menu } from '@shared/models/menu';
-import { WatchlistsResponse } from '@shared/models/watchlist';
 import { ToastService } from '@shared/services/toast.service';
 import { WatchlistService } from '@shared/services/watchlist.service';
 import { cloneDeep } from 'lodash';
@@ -36,7 +35,18 @@ export class PagesComponent implements OnInit {
   private getWatchlists() {
     this.watchListService.getWatchlists().subscribe({
       next: data => {
-        this.addWatchlistsToMenu(data);
+        const watchlistMenuItem = cloneDeep(this.watchlistMenuItem);
+
+        watchlistMenuItem.children = [];
+
+        watchlistMenuItem.children = data.watchlists.map(watchlist => ({
+          title: watchlist.name,
+          link: `/pages/watchlist/${watchlist.id}`,
+        }));
+
+        watchlistMenuItem.badge = data.watchlists.length;
+
+        this.addWatchlistsToMenu(watchlistMenuItem);
       },
       error: () => {
         this.toastService.error('Error', 'Something went wrong');
@@ -44,32 +54,15 @@ export class PagesComponent implements OnInit {
     });
   }
 
-  addWatchlistsToMenu(data: WatchlistsResponse) {
-    const watchlistMenuItem = cloneDeep(this.watchlistMenuItem);
-
-    watchlistMenuItem.children = [];
-
-    watchlistMenuItem.children = data.watchlists.map(watchlist => ({
-      title: watchlist.name,
-      link: `/pages/watchlist/${watchlist.id}`,
-    }));
-
-    watchlistMenuItem.badge = data.watchlists.length;
-
+  private addWatchlistsToMenu(watchlistMenuItem: Menu) {
     const watchlistPresent = this.menuItems.find(item => item.title === 'Watchlists');
 
-    if (!watchlistPresent) {
-      this.menuItems.push(watchlistMenuItem);
-
-      return;
+    if (watchlistPresent) {
+      this.menuItems = this.menuItems.filter(item => item.title !== 'Watchlists');
     }
 
-    this.menuItems = this.menuItems.map(item => {
-      if (item.title === 'Watchlists') {
-        return watchlistMenuItem;
-      }
+    if (watchlistMenuItem?.children?.length === 0) return;
 
-      return item;
-    });
+    this.menuItems.push(watchlistMenuItem);
   }
 }

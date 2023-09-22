@@ -1,13 +1,15 @@
 <app-modal modalTitle="Save to..." (closeClicked)="onClose()">
-  <ng-container *ngIf="!watchlists.length">
-    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+  <div *ngIf="!watchlists.length">
+    <h3
+      class="mb-2 text-lg font-semibold leading-relaxed text-gray-500 dark:text-gray-400"
+    >
       No watchlists found.
-    </p>
+    </h3>
 
     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
       Create a new one to add this movie to.
     </p>
-  </ng-container>
+  </div>
 
   <fieldset>
     <legend class="sr-only">Add to watchlist</legend>
