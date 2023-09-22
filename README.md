@@ -38,6 +38,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Tailwind](https://tailwindcss.com/)
 - [Angular Material](https://material.angular.io/)
 - [Flowbite](https://flowbite.com/angular/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
 ## Como executar
 
